@@ -204,12 +204,22 @@ function provisioning_download() {
 
     if [[ -n $auth_token ]]; then
         echo "Downloading (auth) $url to $dest_dir"
-        wget --header="Authorization: Bearer $auth_token" --no-check-certificate -c --content-disposition --show-progress -e dotbytes="${3:-4M}" -P "$dest_dir" "$url"
+        if [[ $url =~ civitai\.com ]]; then
+            # For civitai URLs, omit --content-disposition to avoid very long filenames.
+            wget --header="Authorization: Bearer $auth_token" --no-check-certificate -c --show-progress -e dotbytes="${3:-4M}" -P "$dest_dir" "$url"
+        else
+            wget --header="Authorization: Bearer $auth_token" --no-check-certificate -c --content-disposition --show-progress -e dotbytes="${3:-4M}" -P "$dest_dir" "$url"
+        fi
     else
         echo "Downloading (no auth) $url to $dest_dir"
-        wget --no-check-certificate -c --content-disposition --show-progress -e dotbytes="${3:-4M}" -P "$dest_dir" "$url"
+        if [[ $url =~ civitai\.com ]]; then
+            wget --no-check-certificate -c --show-progress -e dotbytes="${3:-4M}" -P "$dest_dir" "$url"
+        else
+            wget --no-check-certificate -c --content-disposition --show-progress -e dotbytes="${3:-4M}" -P "$dest_dir" "$url"
+        fi
     fi
 }
+
 
 # Allow user to disable provisioning if they started with a script they didn't want
 if [[ ! -f /.noprovisioning ]]; then
