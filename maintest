@@ -193,6 +193,8 @@ function provisioning_download() {
     local url="$1"
     local dest_dir="$2"
     local auth_token=""
+    local output_option=""
+    local filename=""
 
     if [[ -n $HF_TOKEN && $url =~ ^https://([a-zA-Z0-9_-]+\.)?huggingface\.co(/|$|\?) ]]; then
         auth_token="$HF_TOKEN"
@@ -202,18 +204,32 @@ function provisioning_download() {
 
     mkdir -p "$dest_dir"
 
+    # For CivitaI URLs, generate a short filename
+    if [[ $url =~ civitai\.com ]]; then
+        local ext=""
+        if [[ $url == *safetensors* ]]; then
+            ext=".safetensors"
+        elif [[ $url == *PickleTensor* ]]; then
+            ext=".pt"
+        elif [[ $url == *\.pt* ]]; then
+            ext=".pt"
+        fi
+        # Generate an MD5 hash of the URL to use as filename
+        filename=$(echo -n "$url" | md5sum | awk '{print $1}')"$ext"
+        output_option="-O ${dest_dir}/${filename}"
+    fi
+
     if [[ -n $auth_token ]]; then
         echo "Downloading (auth) $url to $dest_dir"
         if [[ $url =~ civitai\.com ]]; then
-            # For civitai URLs, omit --content-disposition to avoid very long filenames.
-            wget --header="Authorization: Bearer $auth_token" --no-check-certificate -c --show-progress -e dotbytes="${3:-4M}" -P "$dest_dir" "$url"
+            wget --header="Authorization: Bearer $auth_token" --no-check-certificate -c --show-progress $output_option "$url"
         else
             wget --header="Authorization: Bearer $auth_token" --no-check-certificate -c --content-disposition --show-progress -e dotbytes="${3:-4M}" -P "$dest_dir" "$url"
         fi
     else
         echo "Downloading (no auth) $url to $dest_dir"
         if [[ $url =~ civitai\.com ]]; then
-            wget --no-check-certificate -c --show-progress -e dotbytes="${3:-4M}" -P "$dest_dir" "$url"
+            wget --no-check-certificate -c --show-progress $output_option "$url"
         else
             wget --no-check-certificate -c --content-disposition --show-progress -e dotbytes="${3:-4M}" -P "$dest_dir" "$url"
         fi
