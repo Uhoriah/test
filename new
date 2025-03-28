@@ -187,16 +187,24 @@ function provisioning_has_valid_civitai_token() {
 
 # Download from $1 URL to $2 file path
 function provisioning_download() {
-    if [[ -n $HF_TOKEN && $1 =~ ^https://([a-zA-Z0-9_-]+\.)?huggingface\.co(/|$|\?) ]]; then
+    local url="$1"
+    local dest_dir="$2"
+    local auth_token=""
+
+    if [[ -n $HF_TOKEN && $url =~ ^https://([a-zA-Z0-9_-]+\.)?huggingface\.co(/|$|\?) ]]; then
         auth_token="$HF_TOKEN"
-    elif 
-        [[ -n $CIVITAI_TOKEN && $1 =~ ^https://([a-zA-Z0-9_-]+\.)?civitai\.com(/|$|\?) ]]; then
+    elif [[ -n $CIVITAI_TOKEN && $url =~ ^https://([a-zA-Z0-9_-]+\.)?civitai\.com(/|$|\?) ]]; then
         auth_token="$CIVITAI_TOKEN"
     fi
-    if [[ -n $auth_token ]];then
-        wget --header="Authorization: Bearer $auth_token" -qnc --content-disposition --show-progress -e dotbytes="${3:-4M}" -P "$2" "$1"
+
+    mkdir -p "$dest_dir"
+
+    if [[ -n $auth_token ]]; then
+        echo "Downloading (auth) $url to $dest_dir"
+        wget --header="Authorization: Bearer $auth_token" --no-check-certificate -c --content-disposition --show-progress -e dotbytes="${3:-4M}" -P "$dest_dir" "$url"
     else
-        wget -qnc --content-disposition --show-progress -e dotbytes="${3:-4M}" -P "$2" "$1"
+        echo "Downloading (no auth) $url to $dest_dir"
+        wget --no-check-certificate -c --content-disposition --show-progress -e dotbytes="${3:-4M}" -P "$dest_dir" "$url"
     fi
 }
 
