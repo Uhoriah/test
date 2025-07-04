@@ -30,8 +30,9 @@ CLIP_MODELS=(
     # "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp16.safetensors"
 )
 CHECKPOINT_MODELS=(
-    "https://civitai.com/api/download/models/1490781?type=Model&format=SafeTensor&size=pruned&fp=fp16"
-    "https://civitai.com/api/download/models/1472080?type=Model&format=SafeTensor&size=pruned&fp=fp16"
+    # "https://civitai.com/api/download/models/1490781?type=Model&format=SafeTensor&size=pruned&fp=fp16"
+    # "https://civitai.com/api/download/models/1472080?type=Model&format=SafeTensor&size=pruned&fp=fp16"
+    "https://civitai.com/api/download/models/1876492?type=Model&format=PickleTensor&size=full&fp=fp16"
 )
 LORA_MODELS=(
     "https://civitai.com/api/download/models/1437785?type=Model&format=SafeTensor"
