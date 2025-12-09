@@ -26,23 +26,25 @@ WORKFLOWS=(
 
 # If you want to skip the flux text encoders to speed up provisioning, comment these out.
 CLIP_MODELS=(
+    "https://civitai.com/api/download/models/2442540?type=Model&format=SafeTensor&size=full&fp=fp16"
     # "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/clip_l.safetensors"
     # "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp16.safetensors"
 )
 CHECKPOINT_MODELS=(
+    "https://civitai.com/api/download/models/2442439?type=Model&format=SafeTensor&size=full&fp=bf16"
     # "https://civitai.com/api/download/models/1490781?type=Model&format=SafeTensor&size=pruned&fp=fp16"
     # "https://civitai.com/api/download/models/1472080?type=Model&format=SafeTensor&size=pruned&fp=fp16"
-    "https://civitai.com/api/download/models/1876492?type=Model&format=PickleTensor&size=full&fp=fp16"
+    # "https://civitai.com/api/download/models/1876492?type=Model&format=PickleTensor&size=full&fp=fp16"
 )
 LORA_MODELS=(
-    "https://civitai.com/api/download/models/1437785?type=Model&format=SafeTensor"
-    "https://civitai.com/api/download/models/1221748?type=Model&format=SafeTensor"
-    "https://civitai.com/api/download/models/1545605?type=Model&format=SafeTensor"
-    "https://civitai.com/api/download/models/1443386?type=Model&format=SafeTensor"
-    "https://civitai.com/api/download/models/1356047?type=Model&format=SafeTensor"
-    "https://civitai.com/api/download/models/1438285?type=Model&format=SafeTensor"
-    "https://civitai.com/api/download/models/1484578?type=Model&format=SafeTensor"
-    "https://civitai.com/api/download/models/1583146?type=Model&format=SafeTensor"
+    #"https://civitai.com/api/download/models/1437785?type=Model&format=SafeTensor"
+    #"https://civitai.com/api/download/models/1221748?type=Model&format=SafeTensor"
+    #"https://civitai.com/api/download/models/1545605?type=Model&format=SafeTensor"
+    #"https://civitai.com/api/download/models/1443386?type=Model&format=SafeTensor"
+    #"https://civitai.com/api/download/models/1356047?type=Model&format=SafeTensor"
+    #"https://civitai.com/api/download/models/1438285?type=Model&format=SafeTensor"
+    #"https://civitai.com/api/download/models/1484578?type=Model&format=SafeTensor"
+    #"https://civitai.com/api/download/models/1583146?type=Model&format=SafeTensor"
 )
 UPSCALE_MODELS=(
     "https://civitai.com/api/download/models/164821?type=Model&format=PickleTensor"
@@ -53,6 +55,7 @@ UNET_MODELS=(
 )
 
 VAE_MODELS=(
+    "https://civitai.com/api/download/models/2442479?type=Model&format=SafeTensor&size=full&fp=fp16"
     # VAE is still required.
 )
 
